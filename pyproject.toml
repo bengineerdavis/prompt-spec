@@ -1,0 +1,97 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "prompt-rules-standard"
+version = "0.1.0"
+description = "A vendor-neutral, portable standard for linting and validating prompts and governed documents."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Ben Davis", email = "bengineerdavis@gmail.com" }
+]
+keywords = [
+  "prompts",
+  "linting",
+  "documentation",
+  "markdown",
+  "schema",
+  "standards"
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Documentation",
+  "Topic :: Text Processing :: Markup"
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pre-commit>=3.7",
+  "ruff>=0.11.0",
+  "scriv>=1.8.0",
+  "check-jsonschema>=0.33.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/your-org/prompt-rules-standard"
+Repository = "https://github.com/your-org/prompt-rules-standard"
+Issues = "https://github.com/your-org/prompt-rules-standard/issues"
+
+[tool.setuptools]
+py-modules = []
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+extend-exclude = [
+  ".git",
+  ".venv",
+  "venv",
+  "dist",
+  "build",
+  "node_modules"
+]
+
+[tool.ruff.lint]
+select = [
+  "E",
+  "F",
+  "W",
+  "I",
+  "B",
+  "UP",
+  "SIM"
+]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["scripts"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "lf"
+docstring-code-format = true
+
+[tool.scriv]
+format = "md"
+output_file = "CHANGELOG.md"
+fragment_directory = "changelog.d"
+insert_marker = "<!-- scriv-insert-here -->"
+md_header_level = 2
+categories = ["Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"]
+new_fragment_template = "file: changelog.d/fragment-template.md.j2"
+entry_title_template = "## [{{ version }}] - {{ date.strftime('%Y-%m-%d') }}"
+version = "literal: pyproject.toml: project.version"
+
+[tool.scriv.github-release]
+format = "md"
