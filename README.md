@@ -5,118 +5,52 @@ description: A vendor-neutral, portable standard for linting and validating prom
 version: 0.1.0
 type: documentation
 license: MIT
-***
+---
 
 <!-- Above: YAML frontmatter used by tools. -->
 
 # Prompt Rules Standard (Draft)
 
-A vendor-neutral, portable standard for linting and validating AI prompts. It provides a shared rule catalog—maintained in Markdown but compiling to machine-readable schemas—so the community can automate prompt quality checks without reinventing the wheel.
+A vendor-neutral, portable standard for linting and validating AI prompts and governed documents. It provides a shared rulebook and catalog so tool builders can automate prompt quality checks, safety checks, and metadata validation without reinventing the same logic in isolation.
 
-## Table of Contents
+## Why
 
-- [Why?](#why)
-- [Goals & Non-Goals](#goals--non-goals)
-- [Code format & Versioning](#code-format--versioning)
-- [Rule families](#rule-families)
-- [Fix kinds](#fix-kinds)
-- [Rule catalogue](#rule-catalogue)
+We are not building the linter; we are building the rulebook so others can build the tools.
 
-## Why?
+Today, prompt knowledge is fragmented across vendor docs, papers, blog posts, internal playbooks, and scattered repositories. Teams repeatedly rebuild their own ad hoc checks for missing structure, conflicting instructions, unsafe interpolation, or inconsistent metadata. The Prompt Rules Standard exists to give that work a portable vocabulary and a stable place to live.
 
-We are not building the linter; we are building the rulebook so *you* can build the tools.
+For the longer motivation and background, see [docs/motivation.md](./docs/motivation.md).
 
-Today, practitioners are doing incredible work reverse-engineering model behaviors, but that knowledge is trapped in silos. Every team writes their own ad-hoc validation rules to catch under-specified instructions, conflicting constraints, or unsafe template injections.
+## What this is
 
-Inspired by foundational protocols like LSP, ESLint, and the speed of `uv`, the goal of this project is to pool the community's hard-won knowledge into a shared, automatable standard. By establishing a common vocabulary for prompt defects, we can build an ecosystem where linters, formatters, and CI/CD pipelines plug seamlessly into one another.
+- A portable catalog of prompt-side diagnostics that any CLI, editor, CI pipeline, or prompt management system can adopt.
+- A Markdown-first standard whose human-readable rule documents can compile to machine-readable artifacts.
+- A framework that separates deterministic fixes from template-guided patches and higher-risk semantic rewrites.
 
-*(See [docs/motivation.md](./docs/motivation.md) for the deeper background, examples, and ecosystem context.)*
+## What this is not
 
-## Goals & Non-Goals
+- Not an evaluation framework or a replacement for runtime testing.
+- Not a guarantee that a rule-clean prompt is behaviorally correct.
+- Not an attempt to enforce one universal writing style for all prompts.
 
-**What this is:**
+## How it is organized
 
-- **A portable rule catalogue:** A shared set of prompt-side diagnostics (structure, clarity, safety, etc.) that any CLI, editor, CI pipeline, or prompt management system can adopt.
-- **Markdown-first:** Human-readable rule definitions that compile down to JSON/YAML for tools to consume.
-- **Honest about repairs:** A system that strictly separates safe, deterministic formatting fixes from risky, LLM-assisted semantic rewrites.
+The project is split into a few core layers:
 
-**What this isn't:**
+- **Root documentation** introduces the project and its goals.
+- **`docs/rules/RULES.md`** is the canonical rule catalog, including rule families, code-model details, and the current inventory of draft rules.
+- **`docs/schema/`** contains schema-adjacent documents such as frontmatter rules, extension guidance, and security intake process documentation.
+- **Individual rule files** live under `docs/rules/` in family and subcategory paths.
 
-- **Not an evaluation framework:** Linting does not replace runtime testing, benchmark scoring, or behavioral evals.
-- **Not a guarantee of quality:** A rule-clean prompt is not automatically a *good* prompt. Prompt quality remains highly contextual and model-dependent.
-- **Not an enforcement of "one true style":** It is a framework to catch known defects, not to enforce a rigid, universal writing style.
+## Rule IDs
 
-## Code format & Versioning
+Rule identifiers use short family codes such as `PS`, `PC`, and `PX`. The catalog is moving toward a hierarchical model that separates rule family, subcategory, and rule index while preserving compact draft identifiers during the transition.
 
-Rule identifiers use a compact, neutral namespace:
+For the code model, family layout, and catalog details, see [docs/rules/RULES.md](./docs/rules/RULES.md).
 
-`P<FAMILY><NNN>`
+## Read next
 
-Where:
-
-- `P` indicates a prompt rule.
-- `<FAMILY>` is a 1-3 letter family code.
-- `<NNN>` is a 3-digit rule number.
-
-### File Versioning (YAML Frontmatter)
-
-Every rule document MUST begin with YAML frontmatter that conforms to the Prompt Rules Standard frontmatter schema. At minimum, rule documents must include `id`, `title`, `description`, `version`, `type`, and `license`.
-
-```yaml
----
-id: PS001
-title: Missing explicit task or objective
-description: Detects prompts that provide context or role framing but never state a clear task or requested outcome.
-version: 0.1.0
-type: rule
-license: MIT
----
-```
-
-Rule-specific details such as family membership, fix kind, status, and other catalog metadata SHOULD be expressed in the rule body or under `x-*` extension keys until standardized in the schema.
-
-### Rule numbering within families
-
-Within each family, the last three digits are grouped into conceptual bands rather than treated as a simple counter.
-
-For example, in the `PS` family:
-
-- `PS001`–`PS009` — missing structural elements
-- `PS010`–`PS019` — ordering and placement defects
-- `PS020`–`PS029` — overloaded or entangled structure
-
-This leaves room to add new related rules near existing ones without renumbering the catalog.
-
-**Versioning logic:**
-
-- **MAJOR:** The core definition or detection logic changed (Breaking).
-- **MINOR:** A new valid pattern or fix method was added (Backwards-compatible).
-- **PATCH:** Documentation typos fixed or rationale clarified (No logic changes).
-
-## Rule families
-
-| Family | Meaning |
-|---|---|
-| `PS` | Structure |
-| `PC` | Clarity |
-| `PR` | Reasoning / consistency |
-| `PX` | Safety / interpolation |
-| `PV` | Security / vulnerability intelligence |
-| `PM` | Metadata |
-| `PF` | Formatting / hygiene |
-| `PP` | Prose / style |
-
-## Fix kinds
-
-| Code | Meaning |
-|---|---|
-| `AFX` | Deterministic mechanical repair |
-| `TPL` | Template-guided structured patch |
-| `LLM` | Semantic repair requiring LLM assistance and verification |
-| `NONE` | Diagnostic only |
-
-## Rule catalogue
-
-The full rule catalogue lives in [docs/rules/RULES.md](./docs/rules/RULES.md).
-
-That document lists all rule families and draft rules, and links to the individual rule documents as they are added.
+- [docs/rules/RULES.md](./docs/rules/RULES.md) — canonical rule catalog
+- [docs/schema/frontmatter.md](./docs/schema/frontmatter.md) — frontmatter and schema guidance
+- [docs/schema/security-intake.md](./docs/schema/security-intake.md) — advisory intake and `PV` mapping workflow
+- [docs/motivation.md](./docs/motivation.md) — longer project rationale and research context
