@@ -1,55 +1,88 @@
+---
+id: readme
+title: Prompt Rules Standard (Draft)
+description: A vendor-neutral, portable standard for linting and validating prompts and governed documents.
+version: 0.1.0
+type: documentation
+license: MIT
+---
+
+<!-- Above: YAML frontmatter used by tools. -->
+
 # Prompt Rules Standard (Draft)
 
-A rough draft of a markdown-first standard for cataloging prompt rules that can be used across tools.
+A vendor-neutral, portable standard for linting and validating prompts and governed documents. It provides a shared rule catalog—maintained in Markdown but compiling to machine-readable schemas—so the community can automate prompt quality checks without reinventing the wheel.
 
-The goal is to define a compact, neutral, portable rule catalogue for AI prompt quality
-checks, prompt style checks, and related prompt-side diagnostics without binding the
-rule namespace to any one implementation.
+## Table of Contents
+
+- [Why?](#why)
+- [Goals & Non-Goals](#goals--non-goals)
+- [Code format & Versioning](#code-format--versioning)
+- [Rule families](#rule-families)
+- [Fix kinds](#fix-kinds)
+- [Minimal frontmatter](#minimal-frontmatter)
+- [Context inclusion](#context-inclusion)
+- [Markdown compatibility](#markdown-compatibility)
+- [Rule index](#rule-index)
 
 ## Why?
 
+We are not building the linter; we are building the rulebook so *you* can build the tools.
 
-## Goals
+Today, practitioners are doing incredible work reverse-engineering model behaviors, but that knowledge is trapped in silos. Every team writes their own ad-hoc validation rules to catch under-specified instructions, conflicting constraints, unsafe template injections, or brittle document structures.
 
-- Aggregate community-sourced and professionally-researched rules and evidence into 
-a single, universal, prompt-specific, rule catalogue.
-- Keep Markdown as the human source of truth.
-- Generate machine-readable exports from Markdown.
- one, objective, catalogued standard.
-- Support multiple implementations, including CLIs, editors, CI checks, and prompt management systems.
-- Separate deterministic repair from template-guided and LLM-assisted repair.
-- Stay honest about what prompt-side rules can and cannot validate.
+Inspired by foundational protocols like LSP, ESLint, and the speed of `uv`, the goal of this project is to pool the community's hard-won knowledge into a shared, automatable standard. By establishing a common vocabulary for prompt and document defects, we can build an ecosystem where linters, formatters, and CI/CD pipelines plug seamlessly into one another.
 
-## Non-goals
+*(See [docs/motivation.md](./docs/motivation.md) for the deeper background, examples, and ecosystem context).*
 
-- Output evaluation, benchmark scoring, or runtime behavioral validation.
-- Claims that a rule-clean prompt is automatically a good prompt.
-- Claims that every prompt rule is model-independent.
-- Claims that all prompt rewrites objectively improve quality.
+## Goals & Non-Goals
 
-## Core position
+**What this is:**
 
-Prompt-side rules are useful for catching structural, clarity, reasoning, safety, metadata, formatting, and prose issues before runtime. They are best used as one layer in a larger quality workflow that also includes testing, review, and evals.
+- **A portable rule catalogue:** A shared set of prompt-side and document-side diagnostics (structure, clarity, safety, metadata, etc.) that any CLI, editor, CI pipeline, or prompt management system can adopt.
+- **Markdown-first:** Human-readable rule definitions that compile down to JSON/YAML for tools to consume.
+- **Honest about repairs:** A system that strictly separates safe, deterministic formatting fixes from risky, LLM-assisted semantic rewrites.
+- **Document-driven:** A step toward document-driven design, where governed human-language artifacts can act as design context for both humans and machines.
 
-## Code format
+**What this isn't:**
+
+- **Not an evaluation framework:** Linting does not replace runtime testing, benchmark scoring, or behavioral evals.
+- **Not a guarantee of quality:** A rule-clean prompt or document is not automatically a *good* one. Quality remains contextual and system-dependent.
+- **Not an enforcement of "one true style":** It is a framework to catch known defects, not to enforce a rigid, universal writing style.
+
+## Code format & Versioning
 
 Rule identifiers use a compact, neutral namespace:
 
 `P<FAMILY><NNN>`
 
 Where:
-- `P` indicates a prompt rule.
+
+- `P` indicates a prompt-rule standard code.
 - `<FAMILY>` is a 1-3 letter family code.
 - `<NNN>` is a 3-digit rule number.
 
-Examples:
-- `PS001`
-- `PC014`
-- `PR003`
-- `PX001`
-- `PM001`
-- `PF001`
-- `PP010`
+### File Versioning (YAML Frontmatter)
+
+Governed files use YAML frontmatter with Semantic Versioning (`MAJOR.MINOR.PATCH`) and minimal metadata. This ensures tools can safely parse, validate, and track changes to rule definitions and related documents.
+
+```yaml
+---
+id: PS001
+title: Missing explicit task or objective
+description: The prompt lacks a clearly stated task.
+version: 0.1.0
+type: rule
+license: MIT
+---
+
+```
+
+**Versioning logic:**
+
+- **MAJOR:** The core definition or detection logic changed (breaking).
+- **MINOR:** A new valid pattern or fix method was added (backwards-compatible).
+- **PATCH:** Documentation typos fixed or rationale clarified (no logic changes).
 
 ## Rule families
 
@@ -59,9 +92,11 @@ Examples:
 | `PC` | Clarity |
 | `PR` | Reasoning / consistency |
 | `PX` | Safety / interpolation |
+| `PV` | Security / vulnerability intelligence |
 | `PM` | Metadata |
 | `PF` | Formatting / hygiene |
 | `PP` | Prose / style |
+| `PD` | Documentation |
 
 ## Fix kinds
 
@@ -72,9 +107,57 @@ Examples:
 | `LLM` | Semantic repair requiring LLM assistance and verification |
 | `NONE` | Diagnostic only |
 
+## Minimal frontmatter
+
+Governed files in this repository use a minimal YAML frontmatter block.
+
+Required fields:
+
+- `id`
+- `title`
+- `description`
+- `version`
+- `type`
+- `license`
+
+Optional standard fields:
+
+- `context.include`
+
+The `type` field uses a closed standard vocabulary:
+
+- `documentation`
+- `rule`
+- `schema`
+- `index`
+- `roadmap`
+
+Non-standard metadata is allowed only through top-level `x-*` keys, which must appear after all standard fields.
+
+See `docs/schema/frontmatter.md` and `schema/frontmatter.schema.json`.
+
+## Context inclusion
+
+Files are included in machine context by default unless excluded by repository-level ignore rules or explicitly disabled in frontmatter.
+
+A file may opt out explicitly with:
+
+```yaml
+context:
+  include: false
+```
+
+This supports a broader document-driven design model where some documents are intended as governed machine-readable context and others are not.
+
+## Markdown compatibility
+
+Where existing Markdown rules already solve the problem, this standard should incorporate them by reference rather than reinvent them. If a rule is materially equivalent to an existing `MDxxx` rule, tools may mirror the integer suffix for easier mapping.
+
+This standard should prefer existing rule code and semantics unless a rule truly needs to be modified for prompt-specific or documentation-specific behavior.
+
 ## Rule index
 
-This draft uses a Ruff-style catalog layout: short family tables in the main index, with one file per rule containing rationale, detection guidance, repair guidance, limitations, community resources, research references, and other evidence.
+This draft uses a catalog layout: short family tables in the main index, with one file per rule containing rationale, detection guidance, repair guidance, limitations, and empirical evidence.
 
 ### Structure (`PS`)
 
@@ -94,7 +177,6 @@ This draft uses a Ruff-style catalog layout: short family tables in the main ind
 | `PC002` | Open-ended filler language | Phrases like `etc.` or `and so on` weaken boundaries and leave the task under-specified. | `TPL` | Draft |
 | `PC003` | Hedged imperative | Weak or hesitant phrasing reduces instruction clarity. | `LLM` | Draft |
 | `PC010` | Mixed tone instructions | Tone or style directions conflict, such as asking for both highly formal and very casual writing. | `LLM` | Draft |
-| `PC020` | Overly generic caution text | Generic warning or safety language adds little concrete guidance. | `NONE` | Draft |
 
 ### Reasoning / consistency (`PR`)
 
@@ -113,6 +195,15 @@ This draft uses a Ruff-style catalog layout: short family tables in the main ind
 | `PX002` | Mixed instructions and untrusted content | Trusted instructions and untrusted content appear in the same undifferentiated block. | `TPL` | Draft |
 | `PX003` | Slot allows instruction-like content | A slot may allow imperative phrases that can blur the intended control boundary. | `LLM` | Draft |
 | `PX010` | Weak tool-output boundary | Tool, database, or retrieved content is inserted without clear separation from instructions. | `LLM` | Draft |
+
+### Security / vulnerability intelligence (`PV`)
+
+| Code | Name | Summary | Fix | Status |
+|---|---|---|---|---|
+| `PV001` | Known vulnerable pattern reference | The file references or preserves a known unsafe pattern documented by policy or advisory. | `NONE` | Draft |
+| `PV002` | Unsafe dependency in prompt pipeline | A dependency used in prompt or document processing matches a known advisory. | `NONE` | Draft |
+| `PV003` | Missing trust-boundary declaration | The file consumes external or untrusted context but does not declare its trust model. | `TPL` | Draft |
+| `PV004` | Advisory supersedes local rule | A newer external advisory conflicts with an existing local rule definition and should trigger review. | `NONE` | Draft |
 
 ### Metadata (`PM`)
 
@@ -140,52 +231,11 @@ This draft uses a Ruff-style catalog layout: short family tables in the main ind
 | `PP003` | Weak imperative style | The prompt uses indirect phrasing where a direct instruction would be clearer. | `LLM` | Draft |
 | `PP010` | Overlong preamble | Persona or setup text dominates before the actual task is introduced. | `LLM` | Draft |
 
-## Evidence model
+### Documentation (`PD`)
 
-Each full rule file should eventually include:
-
-- a concise rule summary
-- why the rule exists
-- detection guidance
-- repair guidance
-- limitations and honesty notes
-- community resources
-- research references
-- other evidence
-- evidence, if any, that fixing the issue improves quality
-
-The standard should distinguish:
-- evidence that a pattern exists,
-- evidence that it is harmful,
-- evidence that a given fix helps,
-- and evidence that the fix is safe to automate.
-
-## Honesty criteria
-
-This draft should challenge its own claims.
-
-- Some prompt defects are real and statically observable.
-- Some prompt rules are well-supported by community practice but only weakly supported by controlled studies.
-- Some prompt rewrites are inherently semantic and may improve one metric while harming another.
-- Some rules are hygiene checks and should not be marketed as quality-improving in a strong sense.
-- Passing all prompt rules should never be presented as proof of prompt quality.
-
-## Repository layout
-
-- `README.md` — overview, code format, and rule index
-- `docs/spec.md` — scope, principles, and honesty criteria
-- `docs/codes.md` — namespace and reserved family guidance
-- `docs/fix-kinds.md` — repair semantics and trust model
-- `docs/tool-landscape.md` — related tools and how this differs
-- `docs/research/` — papers, reports, and research notes tied to rules
-- `docs/rules/` — one Markdown file per rule
-- `scripts/build_catalog.py` — generate JSON, YAML, and TOML exports
-- `schemas/rule.schema.json` — schema for generated rule entries
-
-## Near-term next steps
-
-- Rename existing draft rules to the `P<FAMILY><NNN>` format.
-- Add a Ruff-style `docs/rules/README.md` page that links each code to its full rule file.
-- Add a reusable rule-page template with embedded evidence sections.
-- Add more draft rules for clarity and prose/style.
-- Add simple CI to regenerate and validate the catalog.
+| Code | Name | Summary | Fix | Status |
+|---|---|---|---|---|
+| `PD001` | Missing document metadata declaration | Required document metadata is absent. | `TPL` | Draft |
+| `PD002` | Missing context inclusion signal | The file does not make machine-context intent clear where the project expects it. | `TPL` | Draft |
+| `PD010` | Missing H1 | The document lacks a top-level heading. | `TPL` | Draft |
+| `PD020` | Dead link or unresolved reference | The document contains a broken link or unresolved cross-reference. | `NONE` | Draft |
