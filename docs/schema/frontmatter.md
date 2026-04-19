@@ -38,13 +38,12 @@ The following top-level fields are optional:
 
 | Field | Type | Required | Meaning |
 |---|---|---|---|
-| `context.include` | boolean | No | Whether the file is included in machine context. If omitted, files are included unless excluded by repository-level ignore rules. |
+| `context.include` | boolean | No | Whether the file is included in machine context. If omitted, files are included unless excluded by `.promptignore`. |
+
 
 ## Type vocabulary
 
-The `type` field is a closed vocabulary in the core standard.
-
-Allowed values are:
+The `type` field uses a closed set of values. Only these values are valid:
 
 - `documentation`
 - `rule`
@@ -52,14 +51,8 @@ Allowed values are:
 - `index`
 - `roadmap`
 
-Projects that need finer classification SHOULD keep `type` within the standard vocabulary and use an `x-*` extension key for subtyping or tool-specific routing.
-
-Example:
-
-```yaml
-type: documentation
-x-impromptu-subtype: tutorial
-```
+To extend the vocabulary, open a discussion or PR against the standard. Do not use `x-*`
+keys to shadow the `type` field; use them for supplementary metadata only.
 
 ## Extension fields
 
@@ -102,3 +95,13 @@ x-impromptu:
   indexed: true
 ---
 ```
+
+## See also
+
+- [Context Inclusion](../context-inclusion.md) — how `context.include` is
+  resolved by tools, `.promptignore` behavior, and precedence rules.
+- [Extension Fields](./extensions.md) — how `x-*` keys work and when to use them.
+- [Security Intake](./security-intake.md) — how external advisories map to the
+  `PV` rule family.
+- [README — Minimal frontmatter](../../README.md#minimal-frontmatter) — the
+  quick reference for required fields and the closed `type` vocabulary.
