@@ -40,7 +40,6 @@ The following top-level fields are optional:
 |---|---|---|---|
 | `context.include` | boolean | No | Whether the file is included in machine context. If omitted, files are included unless excluded by `.promptignore`. |
 
-
 ## Type vocabulary
 
 The `type` field uses a closed set of values. Only these values are valid:
