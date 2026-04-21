@@ -19,7 +19,6 @@ security advisory intake and `PV` review flow, see
 
 - [Prompt Rules Catalog](#prompt-rules-catalog)
   - [Code model](#code-model)
-    - [Draft compatibility](#draft-compatibility)
   - [Rule families](#rule-families)
   - [PX and PV](#px-and-pv)
   - [Structure (`PS`)](#structure-ps)
@@ -35,7 +34,7 @@ security advisory intake and `PV` review flow, see
 
 ## Code model
 
-The long-term rule identifier model is:
+The canonical rule identifier model is:
 
 `P<FAMILY><AA><BB>`
 
@@ -53,9 +52,15 @@ For example, `PS0102` means:
 
 `<FAMILY>` is a short alphabetic code of 1–3 letters. The catalog expects only a small number of top-level families. Most future growth should happen through family-local subcategories and rule indices rather than by proliferating new family codes.
 
-### Draft compatibility
+Rule files live under:
 
-The current draft still uses shorter family-local identifiers such as `PS001` and `PX010` in some places. These are compact draft identifiers and may later map to explicit hierarchical codes.
+`docs/rules/<family>/<subset>/`
+
+Where:
+
+- `<family>` is the family directory.
+- `<subset>` is the normalized subset directory for that family.
+- any Markdown file in one of those paths is treated as a rule file.
 
 Projects MAY define local extensions in reserved family-local subcategory ranges such as `90`–`99`, without renumbering upstream rules.
 
@@ -86,74 +91,73 @@ For the advisory intake and review workflow that feeds the `PV` family, see [../
 
 Subcategory guidance:
 
-| `AA` | Meaning |
-|---|---|
-| `01` | Missing structural elements |
-| `02` | Ordering / placement defects |
-| `03` | Overloaded or entangled structure |
-| `90`–`99` | Reserved for project-local or experimental extensions |
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `missing` | Missing structural elements |
+| `02` | `ordering` | Ordering / placement defects |
+| `03` | `overloaded` | Overloaded or entangled structure |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
 
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| [`PS001`](./structure/missing/PS001-missing-explicit-task-or-objective.md) | Missing explicit task or objective | The prompt provides context or role framing but does not clearly state the requested task. | `TPL` | Draft |
-| [`PS002`](./structure/missing/PS002-missing-role-or-persona-section.md) | Missing role or persona section | The prompt lacks explicit role framing where the project or house style expects it. | `TPL` | Draft |
-| [`PS003`](./structure/missing/PS003-missing-output-contract.md) | Missing output contract | The prompt does not clearly specify the required output shape or format when one is expected. | `TPL` | Draft |
-| [`PS010`](./structure/ordering/PS010-critical-instructions-buried.md) | Critical instructions buried | Important instructions are buried in the middle of a long prompt instead of being made prominent. | `LLM` | Draft |
-| [`PS020`](./structure/overloaded/PS020-overloaded-all-in-one-section.md) | Overloaded all-in-one section | Task, constraints, examples, and formatting cues are packed into one undifferentiated block. | `LLM` | Draft |
-
-Illustrative long-form mapping:
-
-| Compact draft code | Hierarchical form |
-|---|---|
-| `PS001` | `PS0101` |
-| `PS002` | `PS0102` |
-| `PS003` | `PS0103` |
-| `PS010` | `PS0201` |
-| `PS020` | `PS0301` |
+| [`PS0101`](./structure/missing/PS0101-missing-explicit-task-or-objective.md) | Missing explicit task or objective | The prompt provides context or role framing but does not clearly state the requested task. | `TPL` | Draft |
+| [`PS0102`](./structure/missing/PS0102-missing-role-or-persona-section.md) | Missing role or persona section | The prompt lacks explicit role framing where the project or house style expects it. | `TPL` | Draft |
+| [`PS0103`](./structure/missing/PS0103-missing-output-contract.md) | Missing output contract | The prompt does not clearly specify the required output shape or format when one is expected. | `TPL` | Draft |
+| [`PS0201`](./structure/ordering/PS0201-critical-instructions-buried.md) | Critical instructions buried | Important instructions are buried in the middle of a long prompt instead of being made prominent. | `LLM` | Draft |
+| [`PS0301`](./structure/overloaded/PS0301-overloaded-all-in-one-section.md) | Overloaded all-in-one section | Task, constraints, examples, and formatting cues are packed into one undifferentiated block. | `LLM` | Draft |
 
 ## Clarity (`PC`)
 
+Subcategory guidance:
+
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `objective` | Objective and instruction clarity |
+| `02` | `boundaries` | Boundary-softening or under-specifying language |
+| `03` | `directives` | Tone and directive consistency |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
+
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| `PC001` | Vague objective | The task is underspecified or phrased too vaguely to reliably guide model behavior. | `LLM` | Draft |
-| `PC002` | Open-ended filler language | Phrases like `etc.` or `and so on` weaken boundaries and leave the task under-specified. | `TPL` | Draft |
-| `PC003` | Hedged imperative | Weak or hesitant phrasing reduces instruction clarity. | `LLM` | Draft |
-| `PC010` | Mixed tone instructions | Tone or style directions conflict, such as asking for both highly formal and very casual writing. | `LLM` | Draft |
+| [`PC0101`](./clarity/objective/PC0101-vague-objective.md) | Vague objective | The task is underspecified or phrased too vaguely to reliably guide model behavior. | `LLM` | Draft |
+| [`PC0201`](./clarity/boundaries/PC0201-open-ended-filler-language.md) | Open-ended filler language | Phrases like `etc.` or `and so on` weaken boundaries and leave the task under-specified. | `TPL` | Draft |
+| [`PC0301`](./clarity/directives/PC0301-hedged-imperative.md) | Hedged imperative | Weak or hesitant phrasing reduces instruction clarity. | `LLM` | Draft |
+| [`PC0302`](./clarity/directives/PC0302-mixed-tone-instructions.md) | Mixed tone instructions | Tone or style directions conflict, such as asking for both highly formal and very casual writing. | `LLM` | Draft |
 
 ## Reasoning / consistency (`PR`)
 
+Subcategory guidance:
+
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `conflicts` | Constraint and objective conflicts |
+| `02` | `priority` | Priority and ordering conflicts |
+| `03` | `examples` | Output and example consistency |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
+
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| `PR001` | Conflicting constraints | The prompt contains constraints or goals that appear to be in tension or contradiction. | `LLM` | Draft |
-| `PR002` | Conflicting length guidance | The prompt gives incompatible brevity or verbosity instructions. | `LLM` | Draft |
-| `PR003` | Redundant priority ordering | Multiple sections compete to define top priority, creating ambiguity. | `TPL` | Draft |
-| `PR010` | Inconsistent output examples | One or more examples do not match the described output contract. | `LLM` | Draft |
+| [`PR0101`](./reasoning/conflicts/PR0101-conflicting-constraints.md) | Conflicting constraints | The prompt contains constraints or goals that appear to be in tension or contradiction. | `LLM` | Draft |
+| [`PR0102`](./reasoning/conflicts/PR0102-conflicting-length-guidance.md) | Conflicting length guidance | The prompt gives incompatible brevity or verbosity instructions. | `LLM` | Draft |
+| [`PR0201`](./reasoning/priority/PR0201-redundant-priority-ordering.md) | Redundant priority ordering | Multiple sections compete to define top priority, creating ambiguity. | `TPL` | Draft |
+| [`PR0301`](./reasoning/examples/PR0301-inconsistent-output-examples.md) | Inconsistent output examples | One or more examples do not match the described output contract. | `LLM` | Draft |
 
 ## Safety / interpolation (`PX`)
 
 Subcategory guidance:
 
-| `AA` | Meaning |
-|---|---|
-| `01` | Trust-boundary and delimitation issues |
-| `02` | Tool-output boundary issues |
-| `90`–`99` | Reserved for project-local or experimental extensions |
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `boundaries` | Trust-boundary and delimitation issues |
+| `02` | `tool-output` | Tool-output boundary issues |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
 
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| [`PX001`](./safety/boundaries/PX001-undelimited-untrusted-input-slot.md) | Undelimited untrusted input slot | User-controlled content is interpolated without a strong delimiter boundary. | `TPL` | Draft |
-| [`PX002`](./safety/boundaries/PX002-mixed-instructions-and-untrusted-content.md) | Mixed instructions and untrusted content | Trusted instructions and untrusted content appear in the same undifferentiated block. | `TPL` | Draft |
-| [`PX003`](./safety/boundaries/PX003-slot-allows-instruction-like-content.md) | Slot allows instruction-like content | A slot may allow imperative phrases that can blur the intended control boundary. | `LLM` | Draft |
-| [`PX010`](./safety/tool-output/PX010-weak-tool-output-boundary.md) | Weak tool-output boundary | Tool, database, or retrieved content is inserted without clear separation from instructions. | `LLM` | Draft |
-
-Illustrative long-form mapping:
-
-| Compact draft code | Hierarchical form |
-|---|---|
-| `PX001` | `PX0101` |
-| `PX002` | `PX0102` |
-| `PX003` | `PX0103` |
-| `PX010` | `PX0201` |
+| [`PX0101`](./safety/boundaries/PX0101-undelimited-untrusted-input-slot.md) | Undelimited untrusted input slot | User-controlled content is interpolated without a strong delimiter boundary. | `TPL` | Draft |
+| [`PX0102`](./safety/boundaries/PX0102-mixed-instructions-and-untrusted-content.md) | Mixed instructions and untrusted content | Trusted instructions and untrusted content appear in the same undifferentiated block. | `TPL` | Draft |
+| [`PX0103`](./safety/boundaries/PX0103-slot-allows-instruction-like-content.md) | Slot allows instruction-like content | A slot may allow imperative phrases that can blur the intended control boundary. | `LLM` | Draft |
+| [`PX0201`](./safety/tool-output/PX0201-weak-tool-output-boundary.md) | Weak tool-output boundary | Tool, database, or retrieved content is inserted without clear separation from instructions. | `LLM` | Draft |
 
 ## Security / vulnerability intelligence (`PV`)
 
@@ -166,6 +170,15 @@ For how advisories, testing findings, and incidents flow into `PV`, see
 
 ## Metadata (`PM`)
 
+Subcategory guidance:
+
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `required` | Required metadata presence |
+| `02` | `classification` | Tags, classification, and domain markers |
+| `03` | `model-notes` | Model notes and compatibility annotations |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
+
 The `PM` family exists because prompts increasingly behave like governed artifacts rather than throwaway strings. Once prompts are shared across teams, checked into repositories, versioned, routed through CI, or compiled into machine-readable catalogs, missing metadata becomes a real coordination problem.
 
 Metadata rules help standardize how prompts declare identity, ownership, applicability, model notes, tags, and other context that tooling and humans need in order to manage prompt assets safely and consistently.
@@ -176,11 +189,20 @@ Current draft rules:
 
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| `PM001` | Missing prompt metadata declaration | Required metadata is absent. | `TPL` | Draft |
-| `PM002` | Missing tags or domain notes | The prompt lacks expected tags, domain markers, or classification notes. | `TPL` | Draft |
-| `PM010` | Ambiguous model notes | Model-specific guidance is vague, incomplete, or not actionable. | `LLM` | Draft |
+| [`PM0101`](./metadata/required/PM0101-missing-prompt-metadata-declaration.md) | Missing prompt metadata declaration | Required metadata is absent. | `TPL` | Draft |
+| [`PM0201`](./metadata/classification/PM0201-missing-tags-or-domain-notes.md) | Missing tags or domain notes | The prompt lacks expected tags, domain markers, or classification notes. | `TPL` | Draft |
+| [`PM0301`](./metadata/model-notes/PM0301-ambiguous-model-notes.md) | Ambiguous model notes | Model-specific guidance is vague, incomplete, or not actionable. | `LLM` | Draft |
 
 ## Formatting / hygiene (`PF`)
+
+Subcategory guidance:
+
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `whitespace` | Whitespace and line-ending hygiene |
+| `02` | `delimiters` | Delimiters, fences, and markup hygiene |
+| `03` | `examples` | Example indentation and layout stability |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
 
 The `PF` family exists because prompts are maintained as files, templates, and governed documents. Mechanical inconsistencies such as trailing whitespace, mixed line endings, inconsistent fences, or unstable indentation create noisy diffs, brittle parsing, and unnecessary friction for both tooling and collaborators.
 
@@ -192,12 +214,22 @@ Current draft rules:
 
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| `PF001` | Trailing whitespace | One or more lines end with trailing spaces or tabs. | `AFX` | Draft |
-| `PF002` | Mixed line endings | The prompt file mixes newline styles. | `AFX` | Draft |
-| `PF003` | Inconsistent delimiters or fences | Equivalent structural delimiters are used inconsistently. | `AFX` | Draft |
-| `PF010` | Inconsistent indentation in examples | Example blocks do not follow the expected indentation convention. | `TPL` | Draft |
+| [`PF0101`](./formatting/whitespace/PF0101-trailing-whitespace.md) | Trailing whitespace | One or more lines end with trailing spaces or tabs. | `AFX` | Draft |
+| [`PF0102`](./formatting/whitespace/PF0102-mixed-line-endings.md) | Mixed line endings | The prompt file mixes newline styles. | `AFX` | Draft |
+| [`PF0201`](./formatting/delimiters/PF0201-inconsistent-delimiters-or-fences.md) | Inconsistent delimiters or fences | Equivalent structural delimiters are used inconsistently. | `AFX` | Draft |
+| [`PF0202`](./formatting/delimiters/PF0202-chat-citation-artifacts.md) | Chat citation artifacts | Chat/tool citation tokens like `[web:1073]` or `[file:1042]` appear in governed Markdown prose. | `AFX` | Draft |
+| [`PF0301`](./formatting/examples/PF0301-inconsistent-indentation-in-examples.md) | Inconsistent indentation in examples | Example blocks do not follow the expected indentation convention. | `TPL` | Draft |
 
 ## Prose / style (`PP`)
+
+Subcategory guidance:
+
+| `AA` | Subset dir | Meaning |
+|---|---|---|
+| `01` | `filler` | Filler and redundancy |
+| `02` | `directness` | Imperative strength and directness |
+| `03` | `preamble` | Preamble and framing excess |
+| `90`–`99` | project-local | Reserved for project-local or experimental extensions |
 
 The `PP` family exists because prompt quality is shaped not only by structure and logic, but also by writing quality. Boilerplate phrasing, redundant instructions, weak imperatives, and bloated preambles can reduce clarity, increase ambiguity, and make prompts harder to maintain.
 
@@ -209,10 +241,10 @@ Current draft rules:
 
 | Code | Name | Summary | Fix | Status |
 |---|---|---|---|---|
-| `PP001` | Generic filler phrasing | Boilerplate or generic “AI-sounding” phrasing reduces specificity. | `LLM` | Draft |
-| `PP002` | Redundant phrasing | Instructions repeat the same idea without adding meaning. | `LLM` | Draft |
-| `PP003` | Weak imperative style | The prompt uses indirect phrasing where a direct instruction would be clearer. | `LLM` | Draft |
-| `PP010` | Overlong preamble | Persona or setup text dominates before the actual task is introduced. | `LLM` | Draft |
+| [`PP0101`](./prose/filler/PP0101-generic-filler-phrasing.md) | Generic filler phrasing | Boilerplate or generic “AI-sounding” phrasing reduces specificity. | `LLM` | Draft |
+| [`PP0102`](./prose/filler/PP0102-redundant-phrasing.md) | Redundant phrasing | Instructions repeat the same idea without adding meaning. | `LLM` | Draft |
+| [`PP0201`](./prose/directness/PP0201-weak-imperative-style.md) | Weak imperative style | The prompt uses indirect phrasing where a direct instruction would be clearer. | `LLM` | Draft |
+| [`PP0301`](./prose/preamble/PP0301-overlong-preamble.md) | Overlong preamble | Persona or setup text dominates before the actual task is introduced. | `LLM` | Draft |
 
 ## References
 
@@ -222,7 +254,7 @@ Current draft rules:
 
 - publisher: OpenAI
 - notes: Recommends placing instructions at the beginning of prompts and separating instructions from context with clear delimiters such as `###` or `"""`.
-- url: <https://help.openai.com/en/articles6654000-best-practices-for-prompt-engineering-with-the-openai-api>
+- url: <https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api>
 
 ##### "Prompt engineering"
 
@@ -254,16 +286,14 @@ Current draft rules:
 - notes: Recommends organizing prompts into distinct sections such as instructions, tool guidance, and output description.
 - url: <https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents>
 
-### Why these support current draft rules
+### Why These Support Current Draft Rules
 
 These sources collectively support several recurring draft rule themes already present in the catalog:
 
-    PS rules around missing structure and buried instructions
+- `PS` rules around missing structure and buried instructions
+- `PX` rules around delimiters, trust boundaries, and tool-output isolation
+- `PP` and `PC` rules around vague phrasing, verbosity control, and directness
 
-    PX rules around delimiters, trust boundaries, and tool-output isolation
-
-    PP and PC rules around vague phrasing, verbosity control, and directness
-
-Drafting policy
+### Drafting policy
 
 A public source appearing here does not automatically make a rule normative. The standard still requires editorial judgment, implementation experience, and evidence review before a draft pattern becomes a stable rule.
