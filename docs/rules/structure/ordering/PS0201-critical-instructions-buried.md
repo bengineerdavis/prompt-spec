@@ -1,5 +1,5 @@
 ---
-id: PS010
+id: PS0201
 title: Critical instructions buried
 description: Detects prompts where essential instructions are placed in the middle of long text instead of being made prominent or grouped near the end.
 version: 0.1.0
@@ -7,7 +7,7 @@ type: rule
 license: MIT
 ---
 
-# PS010 — Critical instructions buried
+# PS0201 — Critical instructions buried
 
 ## Summary
 

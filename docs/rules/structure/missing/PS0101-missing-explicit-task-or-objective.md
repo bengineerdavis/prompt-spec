@@ -1,5 +1,5 @@
 ---
-id: PS001
+id: PS0101
 title: Missing explicit task or objective
 description: Detects prompts that provide context or role framing but never state a clear task or requested outcome.
 version: 0.1.0
@@ -7,7 +7,7 @@ type: rule
 license: MIT
 ---
 
-# PS001 — Missing explicit task or objective
+# PS0101 — Missing explicit task or objective
 
 ## Summary
 

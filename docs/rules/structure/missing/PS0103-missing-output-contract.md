@@ -1,5 +1,5 @@
 ---
-id: PS003
+id: PS0103
 title: Missing output contract
 description: Detects prompts that omit a clear output shape or format when one is expected for downstream tooling.
 version: 0.1.0
@@ -7,7 +7,7 @@ type: rule
 license: MIT
 ---
 
-# PS003 — Missing output contract
+# PS0103 — Missing output contract
 
 ## Summary
 
@@ -87,9 +87,10 @@ No explicit indication of how the result should be structured, despite being a c
 
 > Read the following product reviews and decide whether each one is positive, negative, or mixed.  
 > Explain your reasoning.  
->  
+>
 > **Output format:**  
 > Return a JSON array where each element has:  
+>
 > - `label`: one of `"positive"`, `"negative"`, or `"mixed"`.  
 > - `rationale`: 1–2 sentences explaining the decision.
 

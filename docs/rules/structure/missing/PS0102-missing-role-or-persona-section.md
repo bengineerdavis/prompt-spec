@@ -1,5 +1,5 @@
 ---
-id: PS002
+id: PS0102
 title: Missing role or persona section
 description: Detects prompts that omit role or persona framing where the project or house style expects it.
 version: 0.1.0
@@ -7,7 +7,7 @@ type: rule
 license: MIT
 ---
 
-# PS002 — Missing role or persona section
+# PS0102 — Missing role or persona section
 
 ## Summary
 

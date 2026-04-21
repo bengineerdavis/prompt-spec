@@ -1,5 +1,5 @@
 ---
-id: PS020
+id: PS0301
 title: Overloaded all-in-one section
 description: Detects prompts that pack tasks, constraints, examples, and formatting cues into a single undifferentiated block instead of using clear sections.
 version: 0.1.0
@@ -7,7 +7,7 @@ type: rule
 license: MIT
 ---
 
-# PS020 — Overloaded all-in-one section
+# PS0301 — Overloaded all-in-one section
 
 ## Summary
 
