@@ -133,7 +133,23 @@ Equally important: prompt rules are not a substitute for evals or behavioral tes
 
 A shared rule catalogue and shared vocabulary can still make prompt work more legible, automatable, and portable—even without making strong behavioral guarantees. The hope is to support an ecosystem of composable tools that can plug into one another: prompt quality checks, style checks, safety boundaries, metadata validation, documentation validation, and project-specific conventions, assembled into higher-level tooling.
 
-The end result should be a simpler experience: building great prompts and governed documents for personal, professional, or enterprise use should not require manually reconstructing the same scattered knowledge every time.
+The end result should be a simpler experience: building great prompts and governed
+documents for personal, professional, or enterprise use should not require manually
+reconstructing the same scattered knowledge every time.
+
+### Ecosystem and interoperability
+
+The Prompt Rules Standard is intentionally **tool-agnostic**. It is not a
+wrapper around a single linter, formatter, or editor plugin. Instead, it
+defines a shared language of rule IDs, defects, and metadata that any tool can
+implement.
+
+A project might use one command-line checker locally, a different service in
+CI, and a third plugin in their editor; as long as those tools agree on the
+standard’s contracts, their diagnostics remain comparable and portable. The
+goal is to make it easy for new tools to join the ecosystem without asking
+teams to rewrite their documents or rebuild their governance model every time
+they switch vendors or runtimes.
 
 ---
 
