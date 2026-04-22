@@ -140,7 +140,67 @@ governed files portable and machine-readable, we plan to:
 *This item is actively evolving as frontmatter usage and tooling stabilize in
 early adopters’ repositories.*
 
-## 5. Prompt Format Compatibility (Dotprompt & friends)
+## 5. Rule Evaluation & Test Suite
+
+Before rules can be considered stable, they need a repeatable way to confirm
+they detect what they claim to detect and do not fire on valid content.
+
+This section covers the work needed to build that foundation.
+
+### Goals
+
+- Confirm each rule fires correctly on known non-compliant inputs.
+- Confirm each rule does not fire on known compliant inputs.
+- Provide a basis for tracking rule quality over time as the catalog grows.
+- Identify which rules have credible external sources backing their claims, and
+  which are currently based on editorial judgment alone.
+
+### Planned work
+
+- **Fixture-based test suite**
+
+  - For each rule, define a small set of:
+    - `invalid/` fixtures: inputs the rule MUST flag.
+    - `valid/` fixtures: inputs the rule MUST NOT flag.
+    - `fix/` fixtures (where applicable): input/output pairs confirming
+      autofix behavior.
+  - Fixtures live alongside rule files at
+    `docs/rules/<family>/<subset>/tests/<CODE>/`.
+  - Any tool implementing the standard can run against these fixtures
+    to verify conformance.
+
+- **Source and evidence tracking**
+
+  - For each rule, classify the backing evidence:
+    - `empirical` — supported by published research, audit data, or
+      reproducible testing.
+    - `editorial` — based on community judgment, style conventions, or
+      accumulated practitioner experience.
+    - `advisory` — derived from a security advisory, CVE, or red-team
+      finding (primarily for `PV` rules).
+  - Rules backed only by editorial judgment SHOULD be marked accordingly
+    in the catalog and prioritized for future empirical validation.
+
+- **Evaluation harness**
+
+  - A lightweight harness (language-agnostic where possible) that can run
+    fixture sets against a checker implementation and report pass/fail.
+  - The harness output should be machine-readable so it can feed CI and
+    future dashboards.
+
+- **LLM-assisted rule judges**
+
+  - For `LLM`-fix rules where detection requires semantic judgment, define
+    a judge prompt template that can score a given input against the rule's
+    criteria in a reproducible way.
+  - Judge prompts should themselves be governed files and subject to the
+    standard's own rules.
+
+*This item is high priority. Fixture sets for the PF family should be
+the first target, since those rules are the most mechanical and easiest
+to validate deterministically.*
+
+## 6. Prompt Format Compatibility (Dotprompt & friends)
 
 To improve interoperability with existing prompt tooling, the standard will
 add compatibility guidance and conversion support for widely used prompt file
@@ -185,7 +245,7 @@ tooling ecosystem with minimal friction.
 *Dotprompt compatibility is a near-term priority, since it directly supports
 file-based workflows already emerging in the community.*
 
-## 6. Security & Advisory Intake
+## 7. Security & Advisory Intake
 
 Security needs its own explicit treatment in both the rule catalog and the
 surrounding tooling.
@@ -205,7 +265,7 @@ This requires:
 *This item is medium-interest and will likely follow once the PV family is
 more fully defined.*
 
-## 7. Tooling architecture and pluggable checkers
+## 8. Tooling architecture and pluggable checkers
 
 The Prompt Rules Standard is intended to be tool-agnostic and ecosystem-
 friendly. No single checker, formatter, or editor is authoritative. Instead,
@@ -261,7 +321,7 @@ Future work may introduce optional fields for rule metadata, suggested fixes,
 or integration with other diagnostic formats, but the minimal contract aims
 to stay small and stable so that multiple implementations can coexist.
 
-## 8. Deferred Work
+## 9. Deferred Work
 
 The following ideas are useful, but not yet part of the core standard or
 active tooling:
