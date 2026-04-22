@@ -87,7 +87,7 @@ Academic discoveries routinely dictate prompt structure. Research like the [*Los
 Recently, researchers have begun formalizing prompt quality and management itself. This standard draws heavily on this emerging consensus:
 
 - **Formalizing Defects:** Papers like [*A Taxonomy of Prompt Defects in LLM Systems*](https://arxiv.org/abs/2509.14404)[^13] (2025) provide the vocabulary for our rule families, proving that issues like conflicting constraints, missing context, and structural ambiguity can be systematically categorized and detected.
-- **Validating Repairs:** Research such as [*An Empirically-grounded tool for Automatic Prompt Linting and Repair*][^14] validates that while static prompt linting is highly effective, automated *semantic repairs* carry high risks and require strict trust boundaries (which informs our separation of `AFX` vs `LLM` fixes).
+- **Validating Repairs:** Research such as \[*An Empirically-grounded tool for Automatic Prompt Linting and Repair*\][^14] validates that while static prompt linting is highly effective, automated *semantic repairs* carry high risks and require strict trust boundaries (which informs our separation of `AFX` vs `LLM` fixes).
 - **The Need for Standardization:** A recent empirical study, [*Understanding Prompt Management in GitHub Repositories*](https://arxiv.org/abs/2509.12421)[^15] (2025), proved just how fragmented the ecosystem is. Finding a chaotic mix of file formats and metadata inconsistencies across GitHub, the authors explicitly concluded that this inconsistency breaks automated tooling, calling on the community to establish "clear guidelines and standardized formats designed specifically for prompt management."
 
 ## The shift from "Awesome Prompts" to engineering systems
@@ -151,25 +151,42 @@ goal is to make it easy for new tools to join the ecosystem without asking
 teams to rewrite their documents or rebuild their governance model every time
 they switch vendors or runtimes.
 
----
+______________________________________________________________________
 
 ## References
 
 [^1]: Anthropic: [Use XML Tags](https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags)
+
 [^2]: OpenAI: [Best practices for prompt engineering](https://help.openai.com/en/articles/6654000-best-practices-for-prompt-engineering-with-the-openai-api)
+
 [^3]: Microsoft: [Prompty file format specification](https://microsoft.github.io/promptflow/tutorials/prompty-quickstart.html)
+
 [^4]: *Chain-of-Thought Prompting Elicits Reasoning in Large Language Models* (arXiv:2201.11903, Jan 2022). [Read paper](https://arxiv.org/abs/2201.11903)
+
 [^5]: OpenAI: [Reasoning Best Practices (o1 anti-patterns)](https://developers.openai.com/api/docs/guides/reasoning-best-practices)
+
 [^6]: Google: [Prompt design strategies (Gemini)](https://ai.google.dev/gemini-api/docs/prompting-strategies)
+
 [^7]: Anthropic: [Effective context engineering for AI agents](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)
+
 [^8]: DAIR.AI: [Prompt Engineering Guide](https://www.promptingguide.ai/)
+
 [^9]: Open-Source Guide: [LearnPrompting.org](https://learnprompting.org/)
+
 [^10]: DeepLearning.AI: [ChatGPT Prompt Engineering for Developers](https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/)
+
 [^11]: Google Coursera: [Google Prompting Essentials Specialization](https://www.coursera.org/specializations/prompting-essentials-google)
+
 [^12]: *Lost in the Middle: How Language Models Use Long Contexts* (arXiv:2307.03172, July 2023). [Read paper](https://arxiv.org/abs/2307.03172)
+
 [^13]: *A Taxonomy of Prompt Defects in LLM Systems* (arXiv:2509.14404, Sept 2025). [Read paper](https://arxiv.org/abs/2509.14404)
+
 [^14]: *An Empirically-grounded tool for Automatic Prompt Linting and Repair*. Validates that automated semantic repairs carry high risks and require strict trust boundaries.
+
 [^15]: *Understanding Prompt Management in GitHub Repositories* (arXiv:2509.12421, Sept 2025). [Read paper](https://arxiv.org/abs/2509.12421)
+
 [^16]: Reddit `r/ChatGPTPro`: [Prompt engineering repos on Github up to date for 2026?](https://www.reddit.com/r/ChatGPTPro/comments/1shbzcg/prompt_engineering_repos_on_github_up_to_date_for/) (April 2026).
+
 [^17]: Palo Alto Networks Unit 42: [Open, Closed and Broken: Prompt Fuzzing Finds LLMs Still Fragile](https://unit42.paloaltonetworks.com/genai-llm-prompt-fuzzing/) (March 2026).
+
 [^18]: *Context Engineering* (arXiv:2603.09619, March 2026). [Read paper](https://arxiv.org/abs/2603.09619)

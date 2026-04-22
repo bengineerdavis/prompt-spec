@@ -11,14 +11,14 @@ license: MIT
 
 ## Summary
 
-The prompt provides background, role framing, or scenario setup but never clearly states what the model is supposed to do.  
+The prompt provides background, role framing, or scenario setup but never clearly states what the model is supposed to do.\
 This leaves the model to infer the task from context, which is unreliable and often produces off-target responses.
 
 ## Rationale
 
-Even strong models do not reliably infer user intent from context alone.  
-When a prompt only describes a situation or persona without a clear directive, responses tend to be generic, misaligned, or incomplete.  
-Explicitly stating the task or objective makes the prompt easier to read, easier to review, and easier to evolve over time.  
+Even strong models do not reliably infer user intent from context alone.\
+When a prompt only describes a situation or persona without a clear directive, responses tend to be generic, misaligned, or incomplete.\
+Explicitly stating the task or objective makes the prompt easier to read, easier to review, and easier to evolve over time.\
 It also allows tools to reason about whether the rest of the prompt (constraints, examples, formatting) actually supports the requested outcome.
 
 ## Detection guidance
@@ -47,10 +47,10 @@ This rule is typically repairable via a template-guided patch:
 
 Examples of safe repairs:
 
-- From: “You are a senior support engineer helping users debug issues in our error tracking tool.”  
+- From: “You are a senior support engineer helping users debug issues in our error tracking tool.”\
   To: “You are a senior support engineer helping users debug issues in our error tracking tool. **Your task is to read each user message and respond with a concise, step-by-step troubleshooting plan.**”
 
-- From: “Below is a customer email about a billing dispute.”  
+- From: “Below is a customer email about a billing dispute.”\
   To: “Below is a customer email about a billing dispute. **Your task is to draft a polite, clear response that explains our policy, proposes a resolution, and asks for any missing information.**”
 
 Repair tools MUST:
@@ -71,21 +71,21 @@ Implementations SHOULD allow projects to suppress PS001 for files or sections th
 
 ### Non-compliant
 
-> You are a senior reliability engineer at a large streaming company.  
-> You care about safety, quality, and clear communication.  
+> You are a senior reliability engineer at a large streaming company.\
+> You care about safety, quality, and clear communication.\
 > You are reviewing incidents as part of a weekly postmortem process.
 
 There is no explicit task or requested output; the model has to guess what to do.
 
 ### Compliant
 
-> You are a senior reliability engineer at a large streaming company.  
-> You care about safety, quality, and clear communication.  
+> You are a senior reliability engineer at a large streaming company.\
+> You care about safety, quality, and clear communication.\
 > **Your task is to review each incident summary and produce a concise postmortem: a 3–5 sentence narrative, a list of contributing factors, and 2–3 concrete follow-up actions.**
 
 The task and expected output shape are now explicit.
 
 ## Evidence notes
 
-- This rule aligns with vendor guidance that emphasizes clearly stating the task or objective rather than relying on implicit intent.  
+- This rule aligns with vendor guidance that emphasizes clearly stating the task or objective rather than relying on implicit intent.
 - It also reflects emerging taxonomies of prompt defects where “missing or vague goals” are treated as a distinct structural issue that can be detected statically.

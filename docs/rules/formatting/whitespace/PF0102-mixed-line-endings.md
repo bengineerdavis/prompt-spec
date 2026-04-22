@@ -38,8 +38,8 @@ Signals:
 A straightforward detection approach:
 
 1. Read the file as bytes.
-2. Count occurrences of `\r\n` and `\n` that are not part of a `\r\n` pair.
-3. If both counts are non-zero, flag PF0102.
+1. Count occurrences of `\r\n` and `\n` that are not part of a `\r\n` pair.
+1. If both counts are non-zero, flag PF0102.
 
 Scope:
 

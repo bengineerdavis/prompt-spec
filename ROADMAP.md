@@ -100,6 +100,7 @@ The standard is intentionally Markdown-first and file-based. To make
 governed files portable and machine-readable, we plan to:
 
 - **Stabilize the minimal frontmatter schema.**
+
   - Keep the core author-owned fields small (`id`, `title`, `description`,
     `version`, `license`).
   - Treat fields such as `type` and `context.include` as optional, allowing
@@ -107,10 +108,12 @@ governed files portable and machine-readable, we plan to:
   - Use `x-*` top-level keys for extensions instead of a generic metadata bag.
 
 - **Publish and maintain JSON Schema.**
+
   - Use a human-readable Markdown document as the frontmatter specification.
   - Generate and validate `schema/frontmatter.schema.json` from that spec.
 
 - **Define documentation and security families.**
+
   - `PD` for documentation-specific rules (structure, links, cross-references,
     machine-ingestible Markdown).
   - `PV` for security and vulnerability intelligence (advisories, known unsafe
@@ -118,6 +121,7 @@ governed files portable and machine-readable, we plan to:
   - Treat security as a separate classification axis from how a file is fixed.
 
 - **Clarify Markdown rule mappings.**
+
   - Map existing Markdown rules (for example, from markdownlint) into the
     Prompt Rules Standard where they are equivalent, instead of reinventing
     them.
@@ -127,6 +131,7 @@ governed files portable and machine-readable, we plan to:
     modified for this standard.
 
 - **Add repo automation for consistency.**
+
   - Keep a human-readable `CHANGELOG.md` using fragment-based aggregation.
   - Use pre-commit hooks to enforce frontmatter ordering, `x-*` placement, and
     schema freshness.
@@ -148,6 +153,7 @@ Markdown-first approach.
 Planned work includes:
 
 - **Dotprompt compatibility**
+
   - Define how Dotprompt frontmatter maps into Prompt Rules frontmatter and
     `prompt_spec`.
   - Define which fields are author-owned versus tool-owned during import and
@@ -159,6 +165,7 @@ Planned work includes:
     deferred ecosystem work.
 
 - **Prompt tool compatibility inventory**
+
   - Survey major prompt tools and formats to identify the most useful
     interoperability targets.
   - Prioritize tools that already treat prompts as versioned files or

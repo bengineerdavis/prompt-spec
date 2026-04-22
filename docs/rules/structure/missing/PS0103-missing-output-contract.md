@@ -11,13 +11,13 @@ license: MIT
 
 ## Summary
 
-The prompt does not clearly specify the required output shape or format in situations where downstream code, tools, or reviewers expect a predictable structure.  
+The prompt does not clearly specify the required output shape or format in situations where downstream code, tools, or reviewers expect a predictable structure.\
 This makes it harder to parse, validate, or compare results and increases the risk of brittle integrations.
 
 ## Rationale
 
-Many prompts feed into downstream systems that assume a particular structure: JSON objects, bullet lists, headings plus sections, or fixed response slots.  
-When the output contract is implicit or under-specified, models may respond with prose or formatting that breaks parsers, invalidates evals, or confuses human operators.  
+Many prompts feed into downstream systems that assume a particular structure: JSON objects, bullet lists, headings plus sections, or fixed response slots.\
+When the output contract is implicit or under-specified, models may respond with prose or formatting that breaks parsers, invalidates evals, or confuses human operators.\
 Being explicit about the expected format also makes prompts more portable and easier to lint for other issues (for example, inconsistent examples).
 
 ## Detection guidance
@@ -49,13 +49,16 @@ Template-guided repairs can be safe when the expected format is clear from conte
 
 Examples:
 
-- From:  
+- From:
+
   > Read the following log lines and identify any errors or anomalies.
 
-- To:  
-  > Read the following log lines and identify any errors or anomalies.  
-  > **Output format:**  
-  > - If no issues are found, respond with the single word `OK`.  
+- To:
+
+  > Read the following log lines and identify any errors or anomalies.\
+  > **Output format:**
+  >
+  > - If no issues are found, respond with the single word `OK`.
   > - Otherwise, respond with a JSON array of objects, each with `timestamp`, `severity`, and `message` fields.
 
 Tools SHOULD:
@@ -78,23 +81,23 @@ Implementations SHOULD provide configuration to:
 
 ### Non-compliant
 
-> Read the following product reviews and decide whether each one is positive, negative, or mixed.  
+> Read the following product reviews and decide whether each one is positive, negative, or mixed.\
 > Explain your reasoning.
 
 No explicit indication of how the result should be structured, despite being a classification task.
 
 ### Compliant
 
-> Read the following product reviews and decide whether each one is positive, negative, or mixed.  
-> Explain your reasoning.  
+> Read the following product reviews and decide whether each one is positive, negative, or mixed.\
+> Explain your reasoning.
 >
-> **Output format:**  
-> Return a JSON array where each element has:  
+> **Output format:**\
+> Return a JSON array where each element has:
 >
-> - `label`: one of `"positive"`, `"negative"`, or `"mixed"`.  
+> - `label`: one of `"positive"`, `"negative"`, or `"mixed"`.
 > - `rationale`: 1–2 sentences explaining the decision.
 
 ## Evidence notes
 
-- Structured output guidance in vendor docs shows that clear output contracts significantly improve reliability and downstream integration.  
+- Structured output guidance in vendor docs shows that clear output contracts significantly improve reliability and downstream integration.
 - Research and community practice around evaluation frameworks similarly assume predictable output shapes.

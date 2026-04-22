@@ -1,11 +1,13 @@
----
+______________________________________________________________________
+
 id: security-intake
 title: Security Intake
 description: How external vulnerability advisories map to the PV rule family and flow into the standard.
 version: 0.1.0
 type: schema
 license: MIT
-***
+
+______________________________________________________________________
 
 # Security Intake
 
@@ -31,12 +33,12 @@ Security diagnostics are categorically different from other rule families. A `PS
 
 The standard recognises several primary intake channels:
 
-| Source | Format | What it covers |
-|---|---|---|
-| OSV | OSV JSON | Open-source package vulnerabilities across ecosystems |
-| CVE / NVD | CVE JSON | Broadly published vulnerability identifiers |
-| Dependabot / GitHub | GitHub Advisory DB | Dependency alerts surfaced in CI for the repo's own toolchain |
-| Security testing | Internal or external reports | Prompt fuzzing, red-team findings, exploit proofs, and incident analysis |
+| Source              | Format                       | What it covers                                                           |
+| ------------------- | ---------------------------- | ------------------------------------------------------------------------ |
+| OSV                 | OSV JSON                     | Open-source package vulnerabilities across ecosystems                    |
+| CVE / NVD           | CVE JSON                     | Broadly published vulnerability identifiers                              |
+| Dependabot / GitHub | GitHub Advisory DB           | Dependency alerts surfaced in CI for the repo's own toolchain            |
+| Security testing    | Internal or external reports | Prompt fuzzing, red-team findings, exploit proofs, and incident analysis |
 
 OSV is the preferred machine-readable format where available because it describes affected packages, versions, and ecosystems precisely.
 

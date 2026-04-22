@@ -40,7 +40,7 @@ Signals:
 
 Heuristics:
 
-- Treat fenced code blocks (```…``` or ~~~…~~~) and indented code blocks as the primary scope.
+- Treat fenced code blocks (`…` or ~~~…~~~) and indented code blocks as the primary scope.
 - Prefer flagging obvious local inconsistencies (e.g., in a small YAML or JSON example) over attempting to infer global indentation preferences across the whole file.
 - Allow special cases where indentation is intentionally irregular to illustrate an anti-example; these can be suppressed via project-local mechanisms if needed.
 

@@ -11,13 +11,13 @@ license: MIT
 
 ## Summary
 
-The prompt mixes multiple conceptual roles—task description, constraints, examples, formatting instructions, and sometimes metadata—into one long, undifferentiated block.  
+The prompt mixes multiple conceptual roles—task description, constraints, examples, formatting instructions, and sometimes metadata—into one long, undifferentiated block.\
 This makes it harder for both models and humans to parse, increasing the likelihood of missed constraints, inconsistent behavior, and fragile maintenance.
 
 ## Rationale
 
-Clear separation between different parts of a prompt (task, rules, examples, output format, context) helps models follow instructions and helps developers reason about changes.  
-When everything is crammed into one paragraph or section, any edit risks breaking implicit structure, and it becomes difficult to spot contradictions or missing elements.  
+Clear separation between different parts of a prompt (task, rules, examples, output format, context) helps models follow instructions and helps developers reason about changes.\
+When everything is crammed into one paragraph or section, any edit risks breaking implicit structure, and it becomes difficult to spot contradictions or missing elements.\
 Structured prompts also align better with rule-based tooling and evals, since each section can be validated independently.
 
 ## Detection guidance
@@ -54,25 +54,29 @@ Repairs for PS020 primarily involve restructuring, not changing meaning:
 
 Example repair:
 
-- From (single block):  
+- From (single block):
+
   > You are a helpful assistant. Your task is to summarize customer emails. Do not change the meaning or tone. Only respond with the summary text, no bullet points or headings. For example, when given: "Hi, I’m upset about my order", you might respond with "The customer is dissatisfied with their recent order." Always keep it under three sentences.
 
-- To (structured):  
-  > **Role:**  
-  > You are a helpful assistant.  
+- To (structured):
+
+  > **Role:**\
+  > You are a helpful assistant.
   >
-  > **Task:**  
-  > Summarize customer emails.  
+  > **Task:**\
+  > Summarize customer emails.
   >
-  > **Rules:**  
-  > - Do not change the meaning or tone.  
-  > - Always keep the summary under three sentences.  
-  >  
-  > **Output format:**  
-  > - Respond with plain text only, no bullet points or headings.  
-  >  
-  > **Example:**  
-  > Input: “Hi, I’m upset about my order.”  
+  > **Rules:**
+  >
+  > - Do not change the meaning or tone.
+  > - Always keep the summary under three sentences.
+  >
+  > **Output format:**
+  >
+  > - Respond with plain text only, no bullet points or headings.
+  >
+  > **Example:**\
+  > Input: “Hi, I’m upset about my order.”\
   > Output: “The customer is dissatisfied with their recent order.”
 
 Tools MAY automate a first-pass restructuring by:
@@ -103,25 +107,25 @@ All roles are mixed into one block with no visual or structural separation.
 
 ### Compliant
 
-> **Role:**  
-> You are an AI copywriter.  
+> **Role:**\
+> You are an AI copywriter.
 >
-> **Task:**  
-> Write product descriptions for our e-commerce site, focusing on benefits, not features.  
+> **Task:**\
+> Write product descriptions for our e-commerce site, focusing on benefits, not features.
 >
-> **Rules:**  
+> **Rules:**
 >
-> - Do not mention competitors.  
-> - Keep each description under 80 words.  
->  
-> **Output format:**  
+> - Do not mention competitors.
+> - Keep each description under 80 words.
 >
-> - A description paragraph followed by a short tagline on a new line.  
->  
-> **Example tagline:**  
+> **Output format:**
+>
+> - A description paragraph followed by a short tagline on a new line.
+>
+> **Example tagline:**\
 > “Effortless style for any occasion.”
 
 ## Evidence notes
 
-- Context-engineering and prompt design guidance increasingly advocates for separating task, rules, examples, and output schema as prompts grow more complex.  
+- Context-engineering and prompt design guidance increasingly advocates for separating task, rules, examples, and output schema as prompts grow more complex.
 - Taxonomies of prompt defects recognize “structural ambiguity” and “mixed roles” as a distinct source of failures that static analysis can help detect.

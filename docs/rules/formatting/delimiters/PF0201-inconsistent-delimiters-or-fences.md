@@ -29,7 +29,7 @@ PF0201 encourages a single, predictable delimiter style per structural role with
 
 A linter SHOULD consider PF0201 when a single file:
 
-- Uses more than one fence style for the same kind of block (for example, both ``` and ~~~ code fences for regular code examples).
+- Uses more than one fence style for the same kind of block (for example, both \`\`\` and \~~~ code fences for regular code examples).
 - Uses multiple syntaxes for a clearly equivalent logical boundary (for example, mixing `---` and `***` as horizontal rule separators for the same purpose, or mixing `<<<` / `>>>` with `[[[` / `]]]` as slot markers).[1]
 
 Signals to look for:
@@ -40,8 +40,8 @@ Signals to look for:
 
 Heuristics:
 
-- Treat language-tagged vs. untagged code fences as the same style if their opening token is identical (e.g., ``` and ```json are both backtick fences).
-- Distinguish between different structural roles when deciding if styles conflict. For example, it’s acceptable to use `---` for YAML frontmatter and ``` for code examples.
+- Treat language-tagged vs. untagged code fences as the same style if their opening token is identical (e.g., `and`json are both backtick fences).
+- Distinguish between different structural roles when deciding if styles conflict. For example, it’s acceptable to use `---` for YAML frontmatter and \`\`\` for code examples.
 
 Implementations MAY:
 
@@ -74,27 +74,29 @@ Human review is recommended when:
 
 #### Non-compliant
 
-```md
+````md
 ```json
 { "foo": "bar" }
+````
+
+```
+SELECT * FROM users;
 ```
 
-~~~
-SELECT * FROM users;
-~~~
-```
+````
 
 #### Compliant
 
 ```md
 ```json
 { "foo": "bar" }
-```
+````
 
 ```sql
 SELECT * FROM users;
 ```
-```
+
+````
 
 #### Why it breaks
 
@@ -114,7 +116,7 @@ You are a helpful assistant.
 BEGIN SYSTEM PROMPT
 You must follow all safety guidelines.
 END SYSTEM PROMPT
-```
+````
 
 #### Compliant
 

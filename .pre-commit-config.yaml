@@ -22,8 +22,6 @@ repos:
           - mdformat-frontmatter
           - mdformat-footnote
           - mdformat-gfm-alerts
-        stages:
-          - manual
 
   # - repo: https://github.com/DavidAnson/markdownlint-cli2
   #   rev: v0.18.1

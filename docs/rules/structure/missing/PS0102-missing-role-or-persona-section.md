@@ -11,18 +11,18 @@ license: MIT
 
 ## Summary
 
-The prompt lacks explicit role or persona framing in contexts where the project’s conventions require it (for example, all production prompts must start with a “You are…” section).  
+The prompt lacks explicit role or persona framing in contexts where the project’s conventions require it (for example, all production prompts must start with a “You are…” section).\
 As a result, the model has no guidance about the voice, perspective, or domain posture it should adopt.
 
 ## Rationale
 
-Many teams adopt a house style that requires explicit role or persona framing for important prompts, such as “You are a senior support engineer…” or “You are a careful JSON-only validator…”.  
-This framing helps models maintain consistent tone, domain assumptions, and safety posture, and it gives reviewers a clear way to reason about how the model is being positioned.  
+Many teams adopt a house style that requires explicit role or persona framing for important prompts, such as “You are a senior support engineer…” or “You are a careful JSON-only validator…”.\
+This framing helps models maintain consistent tone, domain assumptions, and safety posture, and it gives reviewers a clear way to reason about how the model is being positioned.\
 When the rest of the system assumes such a persona exists—for example, in documentation, evals, or UX copy—omitting it from the prompt introduces inconsistency and can degrade responses.
 
 ## Detection guidance
 
-This rule is inherently project- or domain-specific.  
+This rule is inherently project- or domain-specific.\
 Detectors SHOULD only apply PS002 when the following conditions are met:
 
 - The repository or project configuration declares that certain prompts (by path, tag, or metadata) MUST include a role or persona section.
@@ -48,11 +48,13 @@ Because persona requirements are house-style decisions, repair is best handled v
 
 Example repair:
 
-- From:  
+- From:
+
   > Summarize each customer support ticket in one or two sentences.
 
-- To:  
-  > You are a senior customer support engineer who writes clear, empathetic responses.  
+- To:
+
+  > You are a senior customer support engineer who writes clear, empathetic responses.\
   > Summarize each customer support ticket in one or two sentences.
 
 Tools SHOULD:
@@ -78,10 +80,10 @@ If house style requires every production prompt to include a persona, this is mi
 
 ### Compliant
 
-> You are a staff reliability engineer writing post-incident summaries for leadership.  
+> You are a staff reliability engineer writing post-incident summaries for leadership.\
 > Summarize each internal incident in 3–5 bullet points, highlighting impact, root cause, and remediation.
 
 ## Evidence notes
 
-- Persona framing is widely recommended in vendor and community guidance for shaping tone and behavior, but not universally required.  
+- Persona framing is widely recommended in vendor and community guidance for shaping tone and behavior, but not universally required.
 - This rule encodes project-specific expectations rather than claiming persona framing is always necessary.

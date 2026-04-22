@@ -12,7 +12,7 @@ license: MIT
 This guide is written for human contributors, LLMs, and autonomous agents
 working with this repository.
 
----
+______________________________________________________________________
 
 ## 1. Architecture: Where Information Goes
 
@@ -31,21 +31,21 @@ We strictly separate the "what" from the "why" to respect the reader's time.
   Focus on detection, repair, examples, and rule-specific references.
 - **`SECURITY.md`:** Security reporting policy. All security reports start here.
 
----
+______________________________________________________________________
 
 ## 2. Proposing a New Rule
 
 1. Check `docs/rules/RULES.md` to confirm the rule does not already exist or
    overlap significantly with a current draft.
-2. Identify the correct rule family (`PS`, `PC`, `PR`, `PX`, `PV`, `PM`,
+1. Identify the correct rule family (`PS`, `PC`, `PR`, `PX`, `PV`, `PM`,
    `PF`, `PP`) and the appropriate subcategory directory path.
-3. Use `docs/rules/rule-file.template.md` as your starting point.
-4. Include rule-specific references that directly support the rule's existence.
-5. Include at least one non-compliant and one compliant example. For broad
+1. Use `docs/rules/rule-file.template.md` as your starting point.
+1. Include rule-specific references that directly support the rule's existence.
+1. Include at least one non-compliant and one compliant example. For broad
    rules, include multiple examples that show the range of triggering patterns.
-6. Open an issue or PR with your draft rule file.
+1. Open an issue or PR with your draft rule file.
 
----
+______________________________________________________________________
 
 ## 3. Rule Identifier Format
 
@@ -69,7 +69,7 @@ to the full hierarchical model.
 Fix kinds must always be formatted as: `` `AFX` ``, `` `TPL` ``, `` `LLM` ``,
 or `` `NONE` ``.
 
----
+______________________________________________________________________
 
 ## 4. Tone and Voice
 
@@ -88,7 +88,7 @@ fragmentation problem, not marketers selling a product.
   neutral, institutional tone. Motivation and community docs may use a slightly
   more personal founding-motivation tone.
 
----
+______________________________________________________________________
 
 ## 5. Citations and Evidence
 
@@ -96,8 +96,8 @@ Whenever you reference an external source, use the **Dual-Link Footnote System**
 for inline convenience with academic rigor.
 
 1. Include an inline Markdown link in the text.
-2. Follow the inline link immediately with a GFM footnote marker `[^N]`.
-3. Add a `## References` section at the bottom with the matching footnote.
+1. Follow the inline link immediately with a GFM footnote marker `[^N]`.
+1. Add a `## References` section at the bottom with the matching footnote.
 
 Example:
 
@@ -111,36 +111,36 @@ was once the golden rule.
 Language Models," 2022. https://arxiv.org/abs/2201.11903
 ```
 
----
+______________________________________________________________________
 
 ## 6. Markdown Formatting
 
 - **Headings:** Use `#` for document title, `##` for major sections, `###`
   for subsections. Never skip a heading level.
-- **Code blocks:** Always specify a language tag. Use ` ```text ` or
-  ` ```markdown ` for prompt examples.
+- **Code blocks:** Always specify a language tag. Use ```` ```text ```` or
+  ```` ```markdown ```` for prompt examples.
 - **Lists over paragraphs:** When comparing three or more items, use a
   bulleted list.
 - **Frontmatter:** Every document in this repository should begin with YAML
   frontmatter conforming to the project's frontmatter schema.
 
----
+______________________________________________________________________
 
 ## 7. Security Reports
 
 See [`SECURITY.md`](./SECURITY.md) for how to report security issues affecting
 the repository, tooling, or the draft standard.
 
----
+______________________________________________________________________
 
 ## 8. Agent and LLM Instructions
 
 If you are an LLM or autonomous agent editing this repository, you MUST:
 
 1. Follow the `P<FAMILY><AA><BB>` naming convention for rule identifiers.
-2. Differentiate between syntactic formatting fixes (`AFX`) and semantic
+1. Differentiate between syntactic formatting fixes (`AFX`) and semantic
    repairs that require LLM assistance (`LLM`).
-3. Source rule rationale from recent academic papers or vendor docs and format
+1. Source rule rationale from recent academic papers or vendor docs and format
    citations using the Dual-Link System.
-4. Use `docs/rules/rule-file.template.md` when creating or revising rule files.
-5. Output raw, valid GitHub Flavored Markdown without markdownlint errors.
+1. Use `docs/rules/rule-file.template.md` when creating or revising rule files.
+1. Output raw, valid GitHub Flavored Markdown without markdownlint errors.

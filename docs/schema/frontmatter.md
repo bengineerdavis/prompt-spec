@@ -23,22 +23,22 @@ This Markdown document is the human-readable normative specification. Tools SHOU
 
 The following top-level fields are required in every governed file:
 
-| Field | Type | Required | Meaning |
-|---|---|---|---|
-| `id` | string | Yes | A unique, URL-safe identifier for the file. |
-| `title` | string | Yes | A human-readable title. |
-| `description` | string | Yes | A concise summary of the file's purpose. |
-| `version` | string | Yes | Semantic version in `MAJOR.MINOR.PATCH` format. |
-| `type` | string | Yes | The file category. Allowed values: `documentation`, `rule`, `schema`, `index`, `roadmap`. |
-| `license` | string | Yes | The reuse license for the file. An SPDX identifier SHOULD be used when possible. |
+| Field         | Type   | Required | Meaning                                                                                   |
+| ------------- | ------ | -------- | ----------------------------------------------------------------------------------------- |
+| `id`          | string | Yes      | A unique, URL-safe identifier for the file.                                               |
+| `title`       | string | Yes      | A human-readable title.                                                                   |
+| `description` | string | Yes      | A concise summary of the file's purpose.                                                  |
+| `version`     | string | Yes      | Semantic version in `MAJOR.MINOR.PATCH` format.                                           |
+| `type`        | string | Yes      | The file category. Allowed values: `documentation`, `rule`, `schema`, `index`, `roadmap`. |
+| `license`     | string | Yes      | The reuse license for the file. An SPDX identifier SHOULD be used when possible.          |
 
 ## Optional fields
 
 The following top-level fields are optional:
 
-| Field | Type | Required | Meaning |
-|---|---|---|---|
-| `context.include` | boolean | No | Whether the file is included in machine context. If omitted, files are included unless excluded by `.promptignore`. |
+| Field             | Type    | Required | Meaning                                                                                                             |
+| ----------------- | ------- | -------- | ------------------------------------------------------------------------------------------------------------------- |
+| `context.include` | boolean | No       | Whether the file is included in machine context. If omitted, files are included unless excluded by `.promptignore`. |
 
 ## Type vocabulary
 
@@ -68,13 +68,13 @@ Standard frontmatter keys MUST appear before any extension keys.
 The recommended order is:
 
 1. `id`
-2. `title`
-3. `description`
-4. `version`
-5. `type`
-6. `license`
-7. `context`
-8. any `x-*` keys
+1. `title`
+1. `description`
+1. `version`
+1. `type`
+1. `license`
+1. `context`
+1. any `x-*` keys
 
 JSON Schema does not reliably enforce key order, so this requirement must be enforced by a linter or other custom validator rather than by the JSON Schema alone.
 

@@ -61,12 +61,12 @@ Preferred repair patterns:
 
 - **Drop the token** when no citation is actually required.
 
-  - `The frontmatter schema is documented here.[file:1042]`  
+  - `The frontmatter schema is documented here.[file:1042]`\
     → `The frontmatter schema is documented here.`[file:1191]
 
 - **Replace with a real Markdown link** when you have a meaningful target.
 
-  - `The frontmatter schema is documented here.[file:1042]`  
+  - `The frontmatter schema is documented here.[file:1042]`\
     → `The frontmatter schema is documented in [Frontmatter Schema](./frontmatter.md).`[file:1191]
 
 - **Replace with a project-specific reference format** if your repo uses a different citation system (for example, a numbered reference list or footnote syntax).

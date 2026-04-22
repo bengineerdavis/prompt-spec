@@ -75,7 +75,6 @@ archive/**
 docs/legal/**
 ```
 
-
 ### 2. `context.include` (per-file, fine-grained)
 
 An optional boolean field in a file's YAML frontmatter. Use this when you
@@ -99,12 +98,12 @@ If `context.include` is omitted, the file is treated as included (subject to
 
 ## Precedence
 
-| Condition | Result |
-|---|---|
-| Path matches `.promptignore` | Excluded — frontmatter not read |
-| `context.include: false` in frontmatter | Excluded |
-| `context.include: true` in frontmatter | Included |
-| `context` key absent from frontmatter | Included (default) |
+| Condition                                       | Result                                   |
+| ----------------------------------------------- | ---------------------------------------- |
+| Path matches `.promptignore`                    | Excluded — frontmatter not read          |
+| `context.include: false` in frontmatter         | Excluded                                 |
+| `context.include: true` in frontmatter          | Included                                 |
+| `context` key absent from frontmatter           | Included (default)                       |
 | File has no frontmatter, not in `.promptignore` | Tool-defined behavior; recommended: skip |
 
 ## What tools should do
@@ -112,10 +111,10 @@ If `context.include` is omitted, the file is treated as included (subject to
 Tools conforming to this standard SHOULD:
 
 1. Read `.promptignore` at the repository root before walking files.
-2. Skip any path matched by a `.promptignore` pattern.
-3. For remaining files, read frontmatter and check `context.include`.
-4. Treat absence of `context.include` as `true`.
-5. Document any deviation from this behavior.
+1. Skip any path matched by a `.promptignore` pattern.
+1. For remaining files, read frontmatter and check `context.include`.
+1. Treat absence of `context.include` as `true`.
+1. Document any deviation from this behavior.
 
 Tools MUST NOT treat `context.include: false` as a security or access-control
 guarantee.

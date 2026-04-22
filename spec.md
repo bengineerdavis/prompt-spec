@@ -39,8 +39,8 @@ The standard should be explicit about what it can and cannot claim.
 ## Design principles
 
 1. Markdown is the source of truth.
-2. Codes are stable and portable.
-3. Rule text should separate detection, rationale, and repair boundaries.
-4. Repairs must be classified by trust level.
-5. Scientific and community evidence should be cited where available.
-6. Rules should remain honest about uncertainty and model sensitivity.
+1. Codes are stable and portable.
+1. Rule text should separate detection, rationale, and repair boundaries.
+1. Repairs must be classified by trust level.
+1. Scientific and community evidence should be cited where available.
+1. Rules should remain honest about uncertainty and model sensitivity.
