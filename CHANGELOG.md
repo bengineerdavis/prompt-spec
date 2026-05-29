@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-05-28
+
+### Breaking Changes
+
+- **Renamed `compliance_level` to `compliance`** — All files with frontmatter must update this top-level key
+- **Dropped `compliance.level` field** — The `simple` vs `full` distinction is deferred until there's evidence it's needed
+- **Renamed status values**:
+  - `compliant` → `pass`
+  - `partial` → `pass` with `exceptions` block
+  - `exempt` → `pass` with `exceptions.exempt`
+  - `unstable` → \`
+
 ## [0.3.0] - 2026-04-19
 
 ### Added

@@ -1,60 +1,263 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://prompt-rules.org/schema/frontmatter.schema.json",
-  "title": "Prompt Rules Standard Frontmatter",
-  "description": "JSON Schema for validating Prompt Rules Standard YAML frontmatter.",
+  "$id": "https://promptspec.org/schemas/frontmatter/v0.4.0.json",
+  "title": "Prompt Spec Frontmatter v0.4.0",
+  "description": "Schema for prompt_spec YAML frontmatter",
   "type": "object",
   "required": [
-    "id",
-    "title",
-    "description",
-    "version",
-    "type",
-    "license"
+    "prompt_spec"
   ],
   "properties": {
-    "id": {
-      "type": "string",
-      "pattern": "^[A-Za-z0-9._-]+$"
-    },
-    "title": {
-      "type": "string",
-      "minLength": 1
-    },
-    "description": {
-      "type": "string",
-      "minLength": 1
-    },
-    "version": {
-      "type": "string",
-      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
-    },
-    "type": {
-      "type": "string",
-      "enum": [
-        "documentation",
-        "rule",
-        "schema",
-        "index",
-        "roadmap"
-      ]
-    },
-    "license": {
-      "type": "string",
-      "minLength": 1
-    },
-    "context": {
+    "prompt_spec": {
       "type": "object",
+      "required": [
+        "version",
+        "compliance"
+      ],
       "properties": {
-        "include": {
-          "type": "boolean"
+        "version": {
+          "type": "string",
+          "description": "Spec version (SemVer)",
+          "examples": [
+            "0.4.0"
+          ]
+        },
+        "compliance": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "pass",
+                "fail",
+                "ignore"
+              ],
+              "description": "Derived compliance status. ignore is human-only."
+            },
+            "exceptions": {
+              "type": "object",
+              "description": "Human override declaring rule deviations",
+              "properties": {
+                "exempt": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Rules that do not apply"
+                },
+                "modified": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Rules that were altered"
+                },
+                "extended": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "Rules with additional constraints"
+                }
+              },
+              "additionalProperties": false
+            },
+            "reviewed": {
+              "type": "object",
+              "description": "Human accountability for approving non-compliant files",
+              "required": [
+                "by"
+              ],
+              "properties": {
+                "by": {
+                  "type": "string",
+                  "description": "Person who approved"
+                },
+                "at": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "Approval timestamp"
+                },
+                "reason": {
+                  "type": "string",
+                  "description": "Explanation for approval"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "inspected": {
+          "type": "object",
+          "description": "Tool-written: last check result",
+          "required": [
+            "tool",
+            "at",
+            "result"
+          ],
+          "properties": {
+            "tool": {
+              "type": "string",
+              "description": "Tool that performed the check"
+            },
+            "at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Check timestamp"
+            },
+            "result": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "fail",
+                "error"
+              ],
+              "description": "Check outcome"
+            },
+            "issues": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Rule IDs that failed. Required when result=fail"
+            },
+            "error": {
+              "type": "string",
+              "description": "Error details. Required when result=error"
+            }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "result": {
+                    "const": "fail"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "issues"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "result": {
+                    "const": "error"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "error"
+                ]
+              }
+            }
+          ]
+        },
+        "fixed": {
+          "type": "object",
+          "description": "Tool-written: last fix result",
+          "required": [
+            "tool",
+            "at",
+            "result"
+          ],
+          "properties": {
+            "tool": {
+              "type": "string",
+              "description": "Tool that performed the fix"
+            },
+            "at": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Fix timestamp"
+            },
+            "result": {
+              "type": "string",
+              "enum": [
+                "pass",
+                "error"
+              ],
+              "description": "Fix outcome"
+            },
+            "changes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Rule IDs that were fixed. Required when result=pass"
+            },
+            "error": {
+              "type": "string",
+              "description": "Error details. Required when result=error"
+            }
+          },
+          "additionalProperties": false,
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "result": {
+                    "const": "pass"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "changes"
+                ]
+              }
+            },
+            {
+              "if": {
+                "properties": {
+                  "result": {
+                    "const": "error"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "error"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "patternProperties": {
+        "^x-": {
+          "description": "Extension field (non-standard)",
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ]
         }
       },
       "additionalProperties": false
     }
   },
-  "patternProperties": {
-    "^x-": true
-  },
-  "additionalProperties": false
+  "additionalProperties": true
 }
