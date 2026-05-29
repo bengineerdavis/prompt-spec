@@ -20,6 +20,16 @@ license: MIT
 This document outlines proposed structural additions to the Prompt Rules
 Standard and near-term ecosystem work we think is worth pursuing.
 
+## Completed
+
+### v0.4.0 (2026-05-28)
+
+- 4-state compliance model (pending, pass, fail, ignore)
+- Two-stage audit trail (inspected + fixed)
+- Human-only ignore state
+- Extension field support (x-\*)
+- Migration guide and tool workflow guide
+
 ## 1. Prompt Anatomy & Strictness Levels
 
 The current catalog lists individual defects, but it does not yet define a
@@ -333,6 +343,22 @@ active tooling:
   broadly useful,
 - automated semantic versioning and release tagging,
 - deeper automation for doc-by-doc updates and changelog synthesis.
+
+#### Manifest Offload (Low Priority)
+
+For large repositories with 1000+ prompt files, aggregating `inspected` and `fixed` audit data into a separate manifest file may improve performance (one file write instead of 1000).
+
+**Status**: Deferred to v0.5.0+ pending evidence of need.
+
+**If added, design constraints**:
+
+- Frontmatter remains canonical source of truth
+- Manifest is `.gitignore`d as a derived cache
+- One manifest can cover multiple prompts (repo-level or directory-level)
+- Tools regenerate manifest from frontmatter on demand
+- If manifest and frontmatter disagree, frontmatter wins
+
+**Current approach (v0.4.0)**: Frontmatter is the only canonical location for audit data. No manifest support.
 
 *These items are intentionally deferred until core concepts and early
 tooling have stabilized.*

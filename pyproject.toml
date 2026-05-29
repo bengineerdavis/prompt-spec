@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "prompt-rules-standard"
-version = "0.3.0"
+version = "0.4.0"
 description = "A vendor-neutral, portable standard for linting and validating prompts and governed documents."
 readme = "README.md"
 requires-python = ">=3.11"

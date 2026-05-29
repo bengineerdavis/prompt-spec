@@ -51,6 +51,13 @@ For the code model, family layout, and catalog details, see [docs/rules/RULES.md
 ## Read next
 
 - [docs/rules/RULES.md](./docs/rules/RULES.md) — canonical rule catalog
-- [docs/schema/frontmatter.md](./docs/schema/frontmatter.md) — frontmatter and schema guidance
-- [docs/schema/security-intake.md](./docs/schema/security-intake.md) — advisory intake and `PV` mapping workflow
 - [docs/motivation.md](./docs/motivation.md) — longer project rationale and research context
+
+### Schema Documentation
+
+- [Frontmatter Specification](docs/schema/frontmatter.md) — Complete spec for `prompt_spec` YAML frontmatter structure, compliance states, and tool behavior
+- [Migration Guide (v0.3.x → v0.4.0)](docs/schema/migration-guide-v03-to-v04.md) — Step-by-step upgrade guide with case-by-case mapping
+- [Tool Workflow Guide](docs/schema/tool-workflow-guide.md) — Recommended patterns for tool implementers: file scanning, batch operations, CI integration
+- [Context Inclusion](docs/schema/context-inclusion.md) — Machine context and `.promptignore` behavior
+- [Security Intake](docs/schema/security-intake.md) — How security advisories flow into
+  rule definitions
